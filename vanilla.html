@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <!-- 클릭 카운트 하기 -->
+    <span>Total Clicks : 0</span>
+    <!-- 클릭 버튼 -->
+    <div>
+        <button id="btn">Click me</button>
+    </div>
+</body>
+<!-- 자바스크립트 -->
+<script>
+    let counter = 0;
+    // button 은 html에서 id가 btn 으로 부여된 애다.
+    const button = document.getElementById("btn");
+
+    // count 바뀌는 것을 html에 innerText로 반영하기
+    const span = document.querySelector("span");
+    
+    // handleClick 기능 생성 => 카운터가 올라가는 것을 표시함.
+    function handleClick() {
+        counter += 1;
+        span.innerText = `Total Clicks :  ${counter}`;
+    
+    }
+    // button 을 클릭했을 때 이벤트 ==> handleClick이 실행되게끔 함.
+    button.addEventListener("click", handleClick);
+</script>
+
+</html>
+
+
+<!-- let과 const의 차이가 궁금하다! -->
+
+<!-- 두개의 공통점은 var와 다르게 변수 재선언 불가능
+    let과 const의 차이점은 변수의 immutable여부이다.
+    let은 변수에 재할당이 가능하지만,
+    const는 변수 재선언, 재할당 모두 불가능하다.-->
