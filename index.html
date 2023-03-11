@@ -13,34 +13,46 @@
   <script type="text/babel">
     function App() {
       // state 생성
-      // array 의 첫번째 item 은 minutes 이며 이는 value 이다. 
+      // array 의 첫번째 item 은 minutes 이며 이는 value 이다.
       // array 의 두번째 item 은 setMinutes 이며 이는 value를 수정하고, component를 새로고침 할 때 쓰는 함수이다.
-      const [minutes, setMinutes] = React.useState();
+      const [minutes, setMinutes] = React.useState(0);
       // onChange 함수 생성
       const onChange = (event) => {
         setMinutes(event.target.value);
       };
-
+      // 리셋 버튼 눌렀을 때 실행되는 함수 생성
+      const reset = () => {
+        setMinutes(0);
+      };
 
       return (
         <div>
-          <h1 classname="hi">Super Converter</h1>
+          <h1>Super Converter</h1>
 
-          <label htmlFor="minutes">Minutes</label>
-          <input
-            value={minutes} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
-            id="minutes"
-            placeholder="Minutes"
-            type="number"
-            onChange={onChange}
-          />
+          <div>
+            <label htmlFor="minutes">Minutes</label>
+            <input
+              value={minutes} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={onChange}
+            />
+          </div>
 
-          <h4>You want to convert {minutes}</h4>
-          <label htmlFor="hours">Hours</label>
-          <input id="hours" placeholder="Hours" type="number" />
-          <h4>You want to convert {minutes}</h4>
+          <div>
+            <label htmlFor="hours">Hours</label>
+            <input
+              value={Math.round(minutes / 60)} // Math.round() 는 소수점 이하를 반올림 하게 됨
+              id="hours"
+              placeholder="Hours"
+              type="number"
+            />
+          </div>
+
+          {/*버튼*/}
+          <button onClick={reset}>Reset</button>
         </div>
-        
       );
     }
     const root = document.getElementById("root");
