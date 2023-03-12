@@ -16,7 +16,7 @@
       // array 의 첫번째 item 은 minutes 이며 이는 value 이다.
       // array 의 두번째 item 은 setMinutes 이며 이는 value를 수정하고, component를 새로고침 할 때 쓰는 함수이다.
       const [amount, setAmount] = React.useState(0);
-      const [flipped, setFlipped] = React.useState(false); // default 값 = False
+      const [inverted, setInverted] = React.useState(false); // default 값 = False
       // onChange 함수 생성
       const onChange = (event) => {
         setAmount(event.target.value);
@@ -27,29 +27,37 @@
       };
 
       // onFlip 함수 생성
-      // flipped가 true라면 false를 반환,
+      // inverted가 true라면 false를 반환,
       // false라면 true를 반환해주게 되는 함수이다.
-      const onFlip = () => {
-        // setFlipped(!flipped);
+      const onInvert = () => {
+        // setinverted(!inverted);
         // 위 보다는 아래 방법을 권장함
         // 현재값을 받아서 그 반대값을 내놓는 함수이다.
         reset(); 
-        setFlipped((current) => !current);
+        setInverted((current) => !current);
       };
 
       return (
-        <div>
-          <h1>Super Converter</h1>
+        <div style={
+          {color:"red",
+            backgroundColor:"#cddc391a",
+            marginLeft:"10rem",
+            alignItems:"center",
+            display:"flex",
+            flexDirection:"column",
+            justifyContent:"center"}
+        }>
+          <h1>시간 변환기</h1>
 
           <div>
             <label htmlFor="minutes">Minutes</label>
             <input
-              value={flipped ? amount*60 : amount} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
+              value={inverted ? amount*60 : amount} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
               id="minutes"
               placeholder="Minutes"
               type="number"
               onChange={onChange}
-              disabled={flipped}
+              disabled={inverted}
             />
           </div>
 
@@ -59,18 +67,18 @@
             // value 값 => 삼항연산자 사용
             // 1. Hours input 태그가 disabled일 경우 Minutes 에 입력한 값 기반으로 시간으로 변환되어 결과값이 출력되게
             // 2. Hours input태그가 활성화 되었을 경우엔 내가 입력한 값이 나오게
-              value={flipped ? amount : Math.round(amount / 60)} // Math.round() 는 소수점 이하를 반올림 하게 됨
+              value={inverted ? amount : Math.round(amount / 60)} // Math.round() 는 소수점 이하를 반올림 하게 됨
               id="hours"
               placeholder="Hours"
               type="number"
+              disabled={!inverted}
               onChange={onChange}
-              disabled={!flipped}
             />
           </div>
 
           {/*버튼*/}
           <button onClick={reset}>Reset</button>
-          <button onClick={onFlip}>Flip</button>
+          <button onClick={onInvert}>{inverted ? "Turn back": "Invert" }</button>
         </div>
       );
     }
