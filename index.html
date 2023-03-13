@@ -38,20 +38,10 @@
       };
 
       return (
-        <div
-          style={{
-            height: "60vh",
-            color: "black",
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ marginBottom: "0.5rem" }}>
-            <label htmlFor="minutes" style={{ marginRight: "0.5rem" }}>
-              Minutes
-            </label>
+        <div>
+          <h3>Minutes to Hours</h3>
+          <div>
+            <label htmlFor="minutes">Minutes</label>
             <input
               value={inverted ? amount * 60 : amount} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
               id="minutes"
@@ -59,14 +49,11 @@
               type="number"
               onChange={onChange}
               disabled={inverted}
-              style={{ height: "2rem", width: "15rem" }}
             />
           </div>
 
-          <div style={{ marginBottom: "1rem" }}>
-            <label htmlFor="hours" style={{ marginRight: "1.4rem" }}>
-              Hours
-            </label>
+          <div>
+            <label htmlFor="hours">Hours</label>
             <input
               // value 값 => 삼항연산자 사용
               // 1. Hours input 태그가 disabled일 경우 Minutes 에 입력한 값 기반으로 시간으로 변환되어 결과값이 출력되게
@@ -77,36 +64,13 @@
               type="number"
               disabled={!inverted}
               onChange={onChange}
-              style={{ height: "2rem", width: "15rem" }}
             />
           </div>
 
           {/*버튼*/}
           <div>
-            <button
-              onClick={reset}
-              style={{
-                width: "6rem",
-                height: "2rem",
-                backgroundColor: "rgba(255, 255, 0, 0.14)",
-                border: "none",
-                marginRight: "2rem",
-                marginLeft: "3rem",
-                cursor: "pointer",
-              }}
-            >
-              리셋
-            </button>
-            <button
-              onClick={onInvert}
-              style={{
-                width: "6rem",
-                height: "2rem",
-                backgroundColor: "rgb(0 128 255 / 14%)",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
+            <button onClick={reset}>리셋</button>
+            <button onClick={onInvert}>
               {inverted ? "돌아가기" : "자리 바꾸기"}
             </button>
           </div>
@@ -115,23 +79,79 @@
     }
 
     function KmToMiles() {
-      return <h3>Km to Miles</h3>;
+      const [amount, setAmount] = React.useState(0);
+      const [inverted, setInverted] = React.useState(false);
+
+      const onChange = (event) => {
+        setAmount(event.target.value);
+      };
+
+      const reset = () => {
+        setAmount(0);
+      };
+
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+      };
+
+      return (
+        <div>
+          <h3>Km to Miles</h3>
+          <div>
+            <label htmlFor="km">Km</label>
+            <input
+              value={inverted ? ((amount * 1.609).toFixed(4)) : amount}
+              id="km"
+              placeholder="km"
+              type="number"
+              onChange={onChange}
+              disabled={inverted}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="Miles">Miles</label>
+            <input
+              value={inverted ? amount : ((amount / 1.609).toFixed(4))}
+              id="km"
+              placeholder="Km"
+              type="number"
+              disabled={!inverted}
+              onChange={onChange}
+            />
+          </div>
+
+          {/*버튼*/}
+          <div>
+            <button onClick={reset}>리셋</button>
+            <button onClick={onInvert}>
+              {inverted ? "돌아가기" : "자리 바꾸기"}
+            </button>
+          </div>
+        </div>
+      );
     }
 
     function App() {
-      const [index, setIndex] = React.useState(0);
+      const [index, setIndex] = React.useState("xx");
+
+      const onSelect = (event) => {
+        setIndex(event.target.value); // 사용자가 어떤 것을 선택했는지 알 수 있게 된다. (0-분과 시, 1-킬로미터와 마일 로 표시됨)
+      };
       return (
         <div>
-          <h1
-            style={{
-              alignItems: "center",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            시간 변환기
-          </h1>
+          <h1>Super Converter</h1>
+          <select value={index} onChange={onSelect}>
+            {/*select에도 value를 준다. 나중에 수정할 경우를 대비*/}
+            <option value="xx">Select Your Units!</option>
+            <option value="0">Minutes & Hours</option>
+            <option value="1">Km & Miles</option>
+          </select>
+          <hr />
+          {/* js 문법을 쓸때에는 중괄호를 꼭 해주도록 한다. 안해주면 text 로 인식됨. 주의!*/}
+          {index === "0" ? <MinutesToHours /> : null}
+          {index === "1" ? <KmToMiles /> : null}
         </div>
       );
     }
