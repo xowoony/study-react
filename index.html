@@ -114,7 +114,12 @@
       );
     }
 
+    function KmToMiles() {
+      return <h3>Km to Miles</h3>;
+    }
+
     function App() {
+      const [index, setIndex] = React.useState(0);
       return (
         <div>
           <h1
@@ -127,7 +132,6 @@
           >
             시간 변환기
           </h1>
-          <MinutesToHours />
         </div>
       );
     }
