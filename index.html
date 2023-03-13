@@ -33,52 +33,85 @@
         // setinverted(!inverted);
         // 위 보다는 아래 방법을 권장함
         // 현재값을 받아서 그 반대값을 내놓는 함수이다.
-        reset(); 
+        reset();
         setInverted((current) => !current);
       };
 
       return (
-        <div style={
-          {color:"red",
-            backgroundColor:"#cddc391a",
-            marginLeft:"10rem",
-            alignItems:"center",
-            display:"flex",
-            flexDirection:"column",
-            justifyContent:"center"}
-        }>
-          <h1>시간 변환기</h1>
+        <div
+          style={{
+            height: "60vh",
+            color: "black",
+            alignItems: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <h1 style={{ marginLeft: "2.5rem" }}>시간 변환기</h1>
 
-          <div>
-            <label htmlFor="minutes">Minutes</label>
+          <div style={{ marginBottom: "0.5rem" }}>
+            <label htmlFor="minutes" style={{ marginRight: "0.5rem" }}>
+              Minutes
+            </label>
             <input
-              value={inverted ? amount*60 : amount} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
+              value={inverted ? amount * 60 : amount} // minutes 값이다. 이는 위 const [minutes, setMinutes] 즉 state에 있다.
               id="minutes"
               placeholder="Minutes"
               type="number"
               onChange={onChange}
               disabled={inverted}
+              style={{ height: "2rem", width: "15rem" }}
             />
           </div>
 
-          <div>
-            <label htmlFor="hours">Hours</label>
+          <div style={{ marginBottom: "1rem" }}>
+            <label htmlFor="hours" style={{ marginRight: "1.4rem" }}>
+              Hours
+            </label>
             <input
-            // value 값 => 삼항연산자 사용
-            // 1. Hours input 태그가 disabled일 경우 Minutes 에 입력한 값 기반으로 시간으로 변환되어 결과값이 출력되게
-            // 2. Hours input태그가 활성화 되었을 경우엔 내가 입력한 값이 나오게
+              // value 값 => 삼항연산자 사용
+              // 1. Hours input 태그가 disabled일 경우 Minutes 에 입력한 값 기반으로 시간으로 변환되어 결과값이 출력되게
+              // 2. Hours input태그가 활성화 되었을 경우엔 내가 입력한 값이 나오게
               value={inverted ? amount : Math.round(amount / 60)} // Math.round() 는 소수점 이하를 반올림 하게 됨
               id="hours"
               placeholder="Hours"
               type="number"
               disabled={!inverted}
               onChange={onChange}
+              style={{ height: "2rem", width: "15rem" }}
             />
           </div>
 
           {/*버튼*/}
-          <button onClick={reset}>Reset</button>
-          <button onClick={onInvert}>{inverted ? "Turn back": "Invert" }</button>
+          <div>
+            <button
+              onClick={reset}
+              style={{
+                width: "6rem",
+                height: "2rem",
+                backgroundColor: "rgba(255, 255, 0, 0.14)",
+                border: "none",
+                marginRight: "2rem",
+                marginLeft: "3rem",
+                cursor: "pointer",
+              }}
+            >
+              리셋
+            </button>
+            <button
+              onClick={onInvert}
+              style={{
+                width: "6rem",
+                height: "2rem",
+                backgroundColor: "rgb(0 128 255 / 14%)",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {inverted ? "돌아가기" : "자리 바꾸기"}
+            </button>
+          </div>
         </div>
       );
     }
