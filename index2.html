@@ -6,17 +6,17 @@
   </body>
   <!-- 리액트 사용을 위한 스크립트 (필수로 적어줘야 함) -->
   <!-- react-dom은 React element를 HTML에 두는 역할을 함. -->
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <!-- prop-types -->
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <!-- Babel을 이용하여 코드를 변환 -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function Btn({ text, onClick }) {
-      console.log(text, "was rendered");
-      {/*위에 들어간 onClick 인자는 이벤트 리스너가 아니라 props임. 밑에 Btn 태그에 전달해주는 역할을 하게 됨*/}
+    function Btn({ text, fontSize = 30 }) {
+      // fontsize = 30 을 적어주면 기본값이 30으로 세팅된다.
       return (
         <button
-          onClick={onClick}
           style={{
             backgroundColor: "rgb(0,0,0,25%)",
             color: "white",
@@ -25,25 +25,25 @@
             borderRadius: "0.2rem",
             cursor: "pointer",
             marginRight: "1rem",
+            // fontSize: fontSize
+            fontSize,
           }}
         >
           {text}
         </button>
       );
     }
-
-    const MemorizedBtn = React.memo(Btn);
+    //
+    Btn.propTypes = {
+      text: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+    };
 
     function App() {
-      // useState 작성
-      const [value, setValue] = React.useState("Save Changes");
-      const changeValue = () => setValue("Revert Changes");
-
       return (
         <div>
-          <MemorizedBtn text={value} onClick={changeValue} />
-          {/*여기 들어간 onClick은 button 태그를 위한 이벤트리스너가 아님!!!! 그냥 props 일 뿐임*/}
-          <MemorizedBtn text="Continue" />
+          <Btn text="Save Changes" fontSize={18} />
+          <Btn text={"Continue"}/>
         </div>
       );
     }
